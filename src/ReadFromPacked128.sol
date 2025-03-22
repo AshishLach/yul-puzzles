@@ -15,6 +15,9 @@ contract ReadFromPacked128 {
             // your code here
             // unpack and read data from the storage variable `readMe` of type uint128
             // then return it
+            mstore(0x10, sload(0))
+
+            return(0x00, 0x20)
         }
     }
 }

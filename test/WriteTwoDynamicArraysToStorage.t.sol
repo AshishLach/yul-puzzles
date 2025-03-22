@@ -11,11 +11,14 @@ contract WriteTwoDynamicArraysToStorageTest is Test {
         c = new WriteTwoDynamicArraysToStorage();
     }
 
-    function test_WriteTwoDynamicArraysToStorage(uint256[] calldata x, uint256[] calldata y, uint256 i, uint256 j)
-        public
-    {
+    function test_WriteTwoDynamicArraysToStorage(
+        uint256[] calldata x,
+        uint256[] calldata y,
+        uint256 i,
+        uint256 j
+    ) public {
         vm.assume(i < x.length && j < y.length);
-
+        console.log("xlength and ylength", x.length, y.length);
         c.main(x, y);
         assertEq(c.writeHere1(i), x[i]);
         assertEq(c.writeHere2(j), y[j]);

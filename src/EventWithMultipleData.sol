@@ -6,6 +6,8 @@ contract EventWithMultipleData {
     event MyEvent(address emitter, uint256 num, bool isActive);
 
     function main(address emitter, uint256 num, bool isActive) external {
+        bytes32 signature = keccak256("MyEvent(address,uint256,bool)");
+
         assembly {
             // your code here
             // emit the `MyEvent(address,uint256,bool)` event
@@ -13,6 +15,10 @@ contract EventWithMultipleData {
             // use `log1` to emit the event with one topic (the event signature hash) and the data payload
             // Hint: Pack the `emitter`, `num`, and `isActive` values in memory for the data payload
             // Note: Ensure the data layout in memory matches the event parameter order
+            mstore(0x00, emitter)
+            mstore(0x20, num)
+            mstore(0x40, isActive)
+            log1(0x00, 0x60, signature)
         }
     }
 }

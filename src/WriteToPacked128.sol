@@ -12,6 +12,13 @@ contract WriteToPacked128 {
             // be careful not to alter the value of `someValue` variable
             // Hint: storage slots are arranged sequentially. Determine the storage slot of `writeHere`
             // and use `sstore` to modify only the `writeHere` variable.
+
+            //  someValue + writeHere
+
+            mstore(0x00, sload(0))
+            mstore(0x10, v)
+            mstore(0x10, mload(0x20))
+            sstore(0, mload(0x00))
         }
     }
 }

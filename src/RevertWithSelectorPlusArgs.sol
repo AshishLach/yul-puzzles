@@ -10,6 +10,16 @@ contract RevertWithSelectorPlusArgs {
             // revert custom error with x parameter
             // Hint: concatenate selector and x by storing them
             // adjacent to each other in memory
+
+            // vm.expectRevert(abi.encodeWithSelector(RevertWithSelectorPlusArgs.RevertData.selector, x));
+            mstore(
+                0x00,
+                0xae41228700000000000000000000000000000000000000000000000000000000
+            ) // function selector 4 bytes
+
+            mstore(0x04, x) //32 bytes
+
+            revert(0x00, 0x24)
         }
     }
 }

@@ -13,6 +13,16 @@ contract ReadFromDoubleMapping {
             // your code here
             // read and return the `token` balance of `user` in the double mapping `balances`
             // Hint: https://www.rareskills.io/post/solidity-dynamic
+
+            mstore(0x00, user)
+            mstore(0x20, 0x00)
+            let initialHash := keccak256(0x00, 0x40)
+            mstore(0x00, token)
+            mstore(0x20, initialHash)
+            let finalSlotHash := keccak256(0x00, 0x40)
+
+            mstore(0x00, sload(finalSlotHash))
+            return(0x00, 0x20)
         }
     }
 }

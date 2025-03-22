@@ -6,6 +6,12 @@ contract ReturnTupleOfUint256String {
         assembly {
             // your code here
             // return the tuple of (uint256 and string): (420, "RareSkills")
+
+            mstore(0x00, 420)
+            mstore(0x20, 0x40)
+            mstore(0x40, 10)
+            mstore(0x60, "RareSkills")
+            return(0x00, 0x80)
         }
     }
 }

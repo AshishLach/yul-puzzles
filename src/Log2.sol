@@ -2,7 +2,6 @@
 pragma solidity ^0.8.13;
 
 contract Log2 {
-
     function main(uint256 x) external pure returns (uint256) {
         assembly {
             // your code here
@@ -18,7 +17,20 @@ contract Log2 {
             //   bin(6) = 0110, so log2(6) = 2
             //   bin(7) = 0111, so log2(6) = 2
             //   bin(8) = 1000, so log2(6) = 3
-  
+            if iszero(x) {
+                revert(0, 0)
+            }
+            let count := 0
+
+            for {
+
+            } gt(shr(1, x), 0) {
+                x := shr(1, x)
+            } {
+                count := add(count, 1)
+            }
+            mstore(0x00, count)
+            return(0x00, 0x20)
         }
     }
 }

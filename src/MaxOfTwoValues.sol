@@ -11,6 +11,18 @@ contract MaxOfTwoValues {
 
             // here is how you do a conditional statement in yul
             // https://docs.soliditylang.org/en/latest/yul.html#if
+
+            let z
+            if gt(x, y) {
+                z := x
+            }
+
+            if iszero(gt(x, y)) {
+                z := y
+            }
+
+            mstore(0x00, z)
+            return(0x00, 0x20)
         }
     }
 }

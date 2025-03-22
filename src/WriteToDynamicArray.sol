@@ -9,6 +9,18 @@ contract WriteToDynamicArray {
             // your code here
             // store the values in the DYNAMIC array `x` in the storage variable `writeHere`
             // Hint: https://www.rareskills.io/post/solidity-dynamic
+            let len := mload(x)
+            //storing length(first 32 bytes) in first slot
+            sstore(0, len)
+            let arrPtr := keccak256(0x0, 0x20)
+
+            for {
+                let i := 0
+            } lt(i, len) {
+                i := add(i, 1)
+            } {
+                sstore(add(arrPtr, i), mload(add(x, mul(32, add(i, 1)))))
+            }
         }
     }
 

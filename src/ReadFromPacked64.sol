@@ -14,11 +14,15 @@ contract ReadFromPacked64 {
         someValue3 = v4;
     }
 
-    function main() external view returns (uint256) {
+    function main() external returns (uint256) {
         assembly {
             // your code here
             // unpack and read data from the storage variable `readMe` of type uint64
             // then return it
+            mstore(0x00, sload(0))
+            mstore(0x78, mload(0x08))
+            mstore(0x00, mload(0x60))
+            return(0x00, 0x20)
         }
     }
 }

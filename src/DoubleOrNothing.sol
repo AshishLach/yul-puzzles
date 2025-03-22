@@ -10,6 +10,13 @@ contract DoubleOrNothing {
             // return 0.
             // Hint: check if x ≤ 10, which is equivalent to x < 11
 
+            let y := 2
+            if gt(x, 10) {
+                y := 0
+            }
+
+            mstore(0x00, mul(x, y))
+            return(0x00, 0x20)
         }
     }
 }

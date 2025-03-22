@@ -11,6 +11,31 @@ contract FizzBuzz {
             // else return an empty string "".
 
             // Assume `num` is greater than 0.
+
+            if and(iszero(mod(num, 3)), iszero(mod(num, 5))) {
+                mstore(0x00, 0x20)
+                mstore(0x20, 0x08)
+                mstore(0x40, "fizzbuzz")
+                return(0x00, 0x60)
+            }
+
+            if iszero(mod(num, 3)) {
+                mstore(0x00, 0x20)
+                mstore(0x20, 0x04)
+                mstore(0x40, "fizz")
+                return(0x00, 0x60)
+            }
+
+            if iszero(mod(num, 5)) {
+                mstore(0x00, 0x20)
+                mstore(0x20, 0x04)
+                mstore(0x40, "buzz")
+                return(0x00, 0x60)
+            }
+            mstore(0x00, 0x20)
+            mstore(0x20, 0x00)
+            // mstore(0x40, "")
+            return(0x00, 0x60)
         }
     }
 }

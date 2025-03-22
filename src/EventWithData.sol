@@ -6,6 +6,7 @@ contract EventWithData {
     event MyEvent(uint256 number);
 
     function main(uint256 _number) external {
+        bytes32 signature = keccak256("MyEvent(uint256)");
         assembly {
             // your code here
             // emit the `MyEvent(uint256)` event
@@ -13,6 +14,10 @@ contract EventWithData {
             //   topic 0: The event signature hash (keccak256("MyEvent(uint256)"))
             //   data: The `number` value as the payload
             // Hint: Use `log1` to emit the event with the hash as the topic and `number` as data
+
+            let memPtr := mload(0x40)
+            mstore(memPtr, _number)
+            log1(memPtr, 0x20, signature)
         }
     }
 }

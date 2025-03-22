@@ -15,6 +15,12 @@ contract BasicBank {
         assembly {
             // emit Deposit(msg.sender, msg.value)
             // increment the balance of the msg.sender by msg.value
+            mstore(0x00, callvalue())
+            log2(0x00, 0x20, depositSelector, caller())
+            mstore(0x00, caller())
+            mstore(0x20, 0x00)
+            let ptr := keccak256(0x00, 0x40)
+            sstore(ptr, add(sload(ptr), callvalue()))
         }
     }
 
@@ -23,10 +29,27 @@ contract BasicBank {
         bytes4 insufficientBalanceSelector = InsufficientBalance.selector;
         assembly {
             // emit Withdraw(msg.sender, amount)
+            mstore(0x00, amount)
+            log2(0x00, 0x20, withdrawSelector, caller())
+
             // if the balance is less than amount, revert InsufficientBalance()
             // decrement the balance of the msg.sender by amount
             // send the amount to the msg.sender
+            mstore(0x00, caller())
+            mstore(0x20, 0x00)
+            let ptr := keccak256(0x00, 0x40)
+            if gt(amount, sload(ptr)) {
+                mstore(
+                    0x00,
+                    0xf4d678b800000000000000000000000000000000000000000000000000000000
+                )
+                revert(0x00, 0x04)
+            }
+            sstore(ptr, sub(sload(ptr), amount))
+
+            if iszero(call(gas(), caller(), amount, 0x00, 0x00, 0x00, 0x00)) {
+                revert(0, 0)
+            }
         }
     }
 }
-

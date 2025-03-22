@@ -15,6 +15,10 @@ contract ReadFromDynamicArray {
             // and return it
             // Assume `index` is <= to the length of readMe
             // Hint: https://www.rareskills.io/post/solidity-dynamic
+
+            let len := sload(0x00)
+            mstore(0x00, sload(add(index, keccak256(0x00, 0x20))))
+            return(0x00, 0x20)
         }
     }
 }
